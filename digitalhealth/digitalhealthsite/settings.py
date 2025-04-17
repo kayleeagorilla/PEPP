@@ -32,9 +32,9 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = False
 
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+# DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 
 # ALLOWED_HOSTS = ['*']
@@ -114,11 +114,12 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
         'OPTIONS': {
             'ssl': {
-                'ssl-mode': 'REQUIRED'
+                'ca': '/etc/ssl/certs/ca-certificates.crt'
             }
         },
     }
 }
+
 
 
 

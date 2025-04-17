@@ -9,17 +9,17 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 
 import pymysql
 pymysql.install_as_MySQLdb()
 
-
+from pathlib import Path
 import os
 import sys
 import dj_database_url
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

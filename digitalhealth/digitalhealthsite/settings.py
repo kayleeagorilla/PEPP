@@ -118,11 +118,14 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
         'OPTIONS': {
             'ssl': {
-                'ca': '/etc/ssl/certs/ca-certificates.crt'
+                'ssl-mode': 'REQUIRED',
+                'check_hostname': False,
+                'verify_server_cert': False
             }
         }
     }
 }
+
 
 
 

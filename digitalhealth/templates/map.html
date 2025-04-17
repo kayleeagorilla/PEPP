@@ -21,6 +21,7 @@
     let publicSchoolsData = []; // Store public schools data
     var markerInfoWindow = [];
     let currentMarker = null; // Store the current marker
+    let schoolMarkers = []; // Array to store the school markers
 
     function initMap() {
       // Initialize the map
@@ -34,9 +35,6 @@
         { file: '/static/data/HIGH_RISK_Tsunami_Evacuation_Zones.geojson?v=1', name: 'HIGH_RISK_Tsunami_Evacuation_Zones' },
         { file: '/static/data/LOW_NO_RISK_Tsunami_Safe_Zones.geojson?v=1', name: 'LOW_NO_RISK_Tsunami_Evacuation_Zones' },
         { file: '/static/data/MED_RISK_Extreme_Tsunami_Evacuation_Zones.geojson?v=1', name: 'MED_RISK_Tsunami_Evacuation_Zones' }
-        
-        {% comment %} { file: '/static/data/Fire_Risk_Areas.geojson?v=1', name: 'Fire_Risk_Areas' } {% endcomment %}
-
       ];
 
       geoJsonFiles.forEach(({ file, name }) => {
@@ -67,44 +65,71 @@
       // Add a click listener to make the clicked zone visible
       map.data.addListener('click', function (event) {
         const sourceName = event.feature.getProperty('sourceName'); // Get the source name
-        const zone = event.feature.getProperty('zone_'); // Get the zone property (if applicable)
-        const clickedLocation = event.latLng;
-showNearestSchools(clickedLocation);
+        const clickedLocation = event.latLng; // Get the clicked location
 
-        let description = "";
-
-        // Determine the layer/file being clicked
-        if (sourceName === 'HIGH_RISK_Tsunami_Evacuation_Zones') {
-          description = "Tsunami Risk: HIGH (Evacuate ASAP)";
-        } else if (sourceName === 'LOW_NO_RISK_Tsunami_Evacuation_Zones') {
-          description = "Tsunami Risk: LOW (Safe Zone)";
-        } else if (sourceName === 'MED_RISK_Tsunami_Evacuation_Zones') {
-          description = "Tsunami Risk: MEDIUM (Be Prepared)";
-        } else if (sourceName === 'Fire_Risk_Areas') {
-          description = "Fire Risk Area: Stay Alert!";
-        } else {
-          description = "Unknown Layer";
-        }
-
-        // Remove the previous marker if it exists
+        // Remove the clicked marker if it exists
         if (currentMarker) {
-          currentMarker.setMap(null);
+            currentMarker.setMap(null); // Remove the existing marker from the map
         }
 
-        // Add a marker at the clicked location
+        // Add a new marker at the clicked location
         currentMarker = new google.maps.Marker({
-          position: clickedLocation,
-          map: map,
-          title: "Clicked Location",
+            position: clickedLocation,
+            map: map,
+            title: "Clicked Location",
         });
 
-        // Display the zone information in the info box
+        // Display the description in the info box
+        let description = "";
+        if (sourceName === 'HIGH_RISK_Tsunami_Evacuation_Zones') {
+            description = `
+                <b>Tsunami Risk: HIGH</b><br>
+                Evacuate if a tsunami warning is issued.<br><br>
+                <button onclick="window.location.href='/resources';" style="background-color: #0066cc; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                    Stay informed
+                </button>
+            `;
+        } else if (sourceName === 'LOW_NO_RISK_Tsunami_Evacuation_Zones') {
+            description = `
+                <b>Tsunami Risk: LOW</b><br>
+                This is a safe zone.<br><br>
+                <button onclick="window.location.href='/resources';" style="background-color: #0066cc; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                    Stay informed
+                </button>
+            `;
+        } else if (sourceName === 'MED_RISK_Tsunami_Evacuation_Zones') {
+            description = `
+                <b>Tsunami Risk: MEDIUM</b><br>
+                Be prepared to evacuate if tsunami conditions worsen.<br><br>
+                <button onclick="window.location.href='/resources';" style="background-color: #0066cc; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                    Stay informed
+                </button>
+            `;
+        } else {
+            description = `
+                Unknown Layer<br><br>
+                <button onclick="window.location.href='/resources';" style="background-color: #0066cc; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                    Stay informed
+                </button>
+            `;
+        }
+
         const zoneInfoBox = document.getElementById('zone-info-box');
         const zoneInfoText = document.getElementById('zone-info-text');
-        zoneInfoText.textContent = `${description}`;
+        zoneInfoText.innerHTML = description;
         zoneInfoBox.style.display = 'block';
+
+        // Show the 3 nearest schools
+        showNearestSchools(clickedLocation);
       });
+
+      // Show the info box with the default message when the page loads
+      const zoneInfoBox = document.getElementById('zone-info-box');
+      const zoneInfoText = document.getElementById('zone-info-text');
+      zoneInfoText.textContent = "Click the map to see the Tsunami Risk";
+      zoneInfoBox.style.display = 'block';
     }
+    
 
     function togglePublicSchools() {
       if (isPublicSchoolsLoaded) {
@@ -124,6 +149,10 @@ showNearestSchools(clickedLocation);
       }
     }
 
+
+
+    
+
     function loadGeoJsonFile(file, name) {
       map.data.loadGeoJson(file, null, (features) => {
         features.forEach((feature) => {
@@ -140,6 +169,16 @@ showNearestSchools(clickedLocation);
           map.data.remove(feature); // Remove the feature from the map
         }
       });
+
+      // Clear existing school markers
+      schoolMarkers.forEach((marker) => marker.setMap(null)); // Remove all markers from the map
+      schoolMarkers = []; // Reset the markers array
+
+      // Remove the clicked marker if it exists
+      if (currentMarker) {
+        currentMarker.setMap(null);
+        currentMarker = null; // Reset the currentMarker variable
+      }
 
       // Hide the zone-info-box
       const zoneInfoBox = document.getElementById('zone-info-box');
@@ -170,24 +209,40 @@ showNearestSchools(clickedLocation);
       const nearestSchools = distances.slice(0, 3);
 
       // Clear existing school markers
-      map.data.forEach((feature) => {
-        if (feature.getProperty('sourceName') === 'Public_Schools') {
-          map.data.remove(feature);
-        }
-      });
+      schoolMarkers.forEach((marker) => marker.setMap(null)); // Remove all markers from the map
+      schoolMarkers = []; // Reset the markers array
 
-      // Add the 3 nearest schools to the map
+      // Add the 3 nearest schools to the map with custom icons
       nearestSchools.forEach(({ school }) => {
-        const schoolFeature = map.data.addGeoJson({
-          type: "FeatureCollection",
-          features: [school],
+        const schoolLocation = {
+          lat: school.geometry.coordinates[1],
+          lng: school.geometry.coordinates[0],
+        };
+
+        const marker = new google.maps.Marker({
+          position: schoolLocation,
+          map: map,
+          title: school.properties.name || "Public School",
+          icon: {
+            url: "/static/images/publicSchoolMarker.png", // Path to the custom icon
+            scaledSize: new google.maps.Size(32, 32), // Resize the icon (optional)
+          },
         });
 
-        schoolFeature.forEach((feature) => {
-          feature.setProperty('sourceName', 'Public_Schools');
+        // Create an InfoWindow for the marker
+        const infoWindow = new google.maps.InfoWindow({
+          content: `<div>
+                      <strong>${school.properties.sch_name || "Unknown School"}</strong><br>
+                      ${school.properties.address || "Address not available"}
+                    </div>`,
         });
 
+        // Add a click listener to open the InfoWindow
+        marker.addListener("click", () => {
+          infoWindow.open(map, marker);
+        });
 
+        schoolMarkers.push(marker); // Add the marker to the array
       });
 
       // Display the info box with school details
@@ -200,11 +255,10 @@ showNearestSchools(clickedLocation);
         )
         .join("\n\n");
 
-
-      const zoneInfoBox = document.getElementById('zone-info-box');
+      {% comment %} const zoneInfoBox = document.getElementById('zone-info-box');
       const zoneInfoText = document.getElementById('zone-info-text');
       zoneInfoText.textContent = `Nearest Schools:\n\n${schoolInfo}`;
-      zoneInfoBox.style.display = 'block';
+      zoneInfoBox.style.display = 'block'; {% endcomment %}
     }
 
     window.initMap = initMap;
@@ -384,9 +438,9 @@ showNearestSchools(clickedLocation);
     </div>
 
     <!-- Button to load Public Schools -->
-    <button id="load-schools-btn" onclick="togglePublicSchools()">
+    {% comment %} <button id="load-schools-btn" onclick="togglePublicSchools()">
         Load Public Schools
-    </button>
+    </button> {% endcomment %}
 </div>
       
   </div>

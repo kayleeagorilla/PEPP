@@ -20,6 +20,8 @@ import os
 import sys
 import dj_database_url
 
+from dotenv import load_dotenv
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,13 +32,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-jjuluenb-v^07e#d57c3+53pehc^umzib-054=-wx21ufg)or)'
-
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
@@ -97,25 +97,14 @@ WSGI_APPLICATION = 'digitalhealthsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         "NAME": "digitalhealthdb",
-#         "USER": "root",
-#         "PASSWORD": "abc12345",
-#         "HOST": "127.0.0.1",
-#         "PORT": "3306",
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'NAME': os.getenv('DB_NAME', 'digitalhealthdb'),
+        'USER': os.getenv('DB_USER', 'root'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'abc12345'),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '3306'),
         'OPTIONS': {
             'ssl': {
                 'ssl-mode': 'REQUIRED',
@@ -125,35 +114,6 @@ DATABASES = {
         }
     }
 }
-
-
-
-
-
-
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-# DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-
-# if DEVELOPMENT_MODE is True:
-#     DATABASES = {
-#         'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         "NAME": "digitalhealthdb",
-#         "USER": "root",
-#         "PASSWORD": "abc12345",
-#         "HOST": "127.0.0.1",
-#         "PORT": "3306",
-#     }
-#     }
-# elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-#     if os.getenv("DATABASE_URL", None) is None:
-#         raise Exception("DATABASE_URL environment variable not defined")
-#     DATABASES = {
-#         "default": dj_database_url.parse(os.environ.get("DATABASE_URL")),
-#     }
 
 
 # Password validation

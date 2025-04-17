@@ -113,10 +113,13 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
         'OPTIONS': {
-            'ssl': {'ssl-mode': 'REQUIRED'},
+            'ssl': {
+                'ca': '/etc/ssl/certs/ca-certificates.crt',
+            }
         },
     }
 }
+
 
 
 

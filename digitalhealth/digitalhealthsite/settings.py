@@ -13,6 +13,10 @@ from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
 
+import pymysql
+pymysql.install_as_MySQLdb()
+
+
 import os
 import sys
 import dj_database_url
@@ -113,10 +117,11 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
         'OPTIONS': {
-            'ssl': {
-                'ca': '/etc/ssl/certs/ca-certificates.crt'
-            }
-        },
+    'ssl': {
+        'ca': '/etc/ssl/certs/ca-certificates.crt'
+    }
+}
+
     }
 }
 

@@ -27,3 +27,4 @@ zopfli==0.2.3.post1
 gunicorn
 dj-database-url
 psycopg2
+pymysql>=1.1

@@ -95,6 +95,34 @@
       background: none;
     }
 
+    .footer-images{
+      position:fixed;
+      bottom:0.6cm;
+      left:0.6cm;
+      display:flex;
+      gap:0.8cm;
+    }
+
+    .footer-icon{
+      width:2.0cm;
+    }
+
+    .second-page{
+      position:relative;
+    }
+
+    .kit-icons{
+      position:absolute;
+      bottom:-5cm;
+      left:0.6cm;
+      display:flex;
+      gap:0.8cm;
+    }
+
+    .kit-icons img {
+      width: 5cm;
+    }
+
   </style>
 </head>
 
@@ -191,7 +219,13 @@
     <h2 style="text-align: center; margin-bottom: 0.5cm;"> My Family's Emergency Kit </h2>
   </div>
 
-  <article id="columns2">
+  <article id="columns2" class="second-page">
+
+    <div class="kit-icons">
+      <img src="{% static 'images/water.png' %}"     alt="Water jug">
+      <img src="{% static 'images/multitool.png' %}" alt="Multi-tool">
+    </div>
+
     <section>
       <div class="column_section"
            style="background: #FAF5E9; border: 2px solid #333; border-radius: 6px;padding: 0.8rem;">
@@ -209,7 +243,6 @@
     <section style="padding-top: 15px;">
       <div class="column_section"
            style="background: #FAF5E9; border: 2px solid #333; border-radius: 6px;padding: 0.8rem;">
-<!--        <div class="h-100 p-5 bg-body-tertiary border rounded-3">-->
           <h3 style="margin-left: 1rem; margin-top: 0.5rem;"> Supplies </h3>
           <ul>
             <li> Extra Clothing </li>
@@ -218,7 +251,6 @@
             <li> Non-Prescription Medications (Painkillers, etc.) </li>
             <li> Sanitation (Disinfecting Wipes, Face Masks, Hand Sanitizer, etc.) </li>
           </ul>
-<!--        </div>-->
       </div>
     </section>
 
@@ -226,7 +258,6 @@
     <section>
       <div class="column_section"
            style="background: #FAF5E9; border: 2px solid #333; border-radius: 6px;padding: 0.8rem;">
-<!--        <div class="h-100 p-5 bg-body-tertiary border rounded-3">-->
           <h3 style="margin-left: 1rem; margin-top: 0.5rem;"> Baby Supplies </h3>
           <ul>
             <li> Baby Food (Enough for {{ infant_number }} infant(s) for 14 days) </li>
@@ -238,7 +269,6 @@
             <li> Baby Wash and Lotion </li>
             <li> Infant Clothes </li>
           </ul>
-<!--        </div>-->
       </div>
     </section>
     {% endif %}
@@ -251,7 +281,6 @@
     {% endif %}
       <div class="column_section"
            style="background: #FAF5E9; border: 2px solid #333; border-radius: 6px;padding: 0.8rem;">
-<!--        <div class="h-100 p-5 bg-body-tertiary border rounded-3">-->
           <h3 style="margin-left: 1rem; margin-top: 0.5rem;"> Important Documents </h3>
           <ul>
             <li> Driver's License/ID </li>
@@ -264,7 +293,6 @@
             {% endif %}
             <li> Extra Cash </li>
           </ul>
-<!--        </div>-->
       </div>
     </section>
 
@@ -275,7 +303,6 @@
     {% endif %}>
       <div class="column_section"
            style="background: #FAF5E9; border: 2px solid #333; border-radius: 6px;padding: 0.8rem;">
-<!--        <div class="h-100 p-5 bg-body-tertiary border rounded-3">-->
           <h3 style="margin-left: 1rem; margin-top: 0.5rem;"> Medical and Functional Needs </h3>
           <ul>
             {% if mobility == "yes" %}
@@ -296,53 +323,27 @@
             <li> Dentures </li>
             {% endif %}
           </ul>
-<!--        </div>-->
       </div>
     </section>
     {% endif %}
 
-    <section {% if infant_number > 0 %}
-             style="padding-top: 15px;"
-             {% endif %}>
-      <div class="column_section"
-           style="background: #FAF5E9; border: 2px solid #333; border-radius: 6px;padding: 0.8rem;">
-<!--        <div class="h-100 p-5 bg-body-tertiary border rounded-3">-->
-          <h3 style="margin-left: 1rem; margin-top: 0.5rem;"> Electronics & Tools </h3>
-          <ul>
-            <li> Phone Chargers </li>
-            <li> Flashlight </li>
-              <li> Extra Batteries </li>
-            <li> Radio </li>
-            <li> Can Opener </li>
-            <li> Multi-Tool </li>
-            <li> Matches </li>
-            <li> Thermometer </li>
-          </ul>
-<!--        </div>-->
+    <section {% if infant_number > 0 %} style="padding-top: 15px;" {% endif %}>
+      <div class="column_section" style="background: #FAF5E9; border: 2px solid #333; border-radius: 6px;padding: 0.8rem;">
+        <h3 style="margin-left: 1rem; margin-top: 0.5rem;"> Electronics & Tools </h3>
+        <ul>
+          <li> Phone Chargers </li>
+          <li> Flashlight </li>
+          <li> Extra Batteries </li>
+          <li> Radio </li>
+          <li> Can Opener </li>
+          <li> Multi-Tool </li>
+          <li> Matches </li>
+          <li> Thermometer </li>
+        </ul>
       </div>
     </section>
 
   </article>
-
-<!--  <div style="padding-top: 2.9cm;">-->
-<!--    <h2 style="text-align: center; margin-bottom: 0;"> Location Information </h2>-->
-<!--  </div>-->
-
-<!--  <article id="columns3">-->
-<!--    <section>-->
-<!--      <div class="column_section">-->
-<!--        <h2 style="text-align: center"> Evacuation Routes </h2>-->
-<!--      </div>-->
-<!--    </section>-->
-
-<!--    <section>-->
-<!--      <div class="column_section">-->
-<!--        <h2 style="text-align: center"> Points of Interest </h2>-->
-<!--      </div>-->
-<!--    </section>-->
-
-<!--  </article>-->
-
 </body>
 
 </html>

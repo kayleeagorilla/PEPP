@@ -99,23 +99,23 @@ WSGI_APPLICATION = 'digitalhealthsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': os.getenv('DB_NAME', 'digitalhealthdb'),
-#         'USER': os.getenv('DB_USER', 'root'),
-#         'PASSWORD': os.getenv('DB_PASSWORD', 'abc12345'),
-#         'HOST': os.getenv('DB_HOST', '127.0.0.1'),
-#         'PORT': os.getenv('DB_PORT', '3306'),
-#         'OPTIONS': {
-#             'ssl': {
-#                 'ssl-mode': 'REQUIRED',
-#                 'check_hostname': False,
-#                 'verify_server_cert': False
-#             }
-#         }
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME', 'digitalhealthdb'),
+        'USER': os.getenv('DB_USER', 'root'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'abc12345'),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '3306'),
+        'OPTIONS': {
+            'ssl': {
+                'ssl-mode': 'REQUIRED',
+                'check_hostname': False,
+                'verify_server_cert': False
+            }
+        }
+    }
+}
 
 
 # Password validation

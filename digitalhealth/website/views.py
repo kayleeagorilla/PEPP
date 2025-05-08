@@ -38,7 +38,7 @@ def location_forms_view(request):
     if request.method == "POST":
         request.session["meeting_info"]  = request.POST.get("meeting_info", "")
         request.session["meeting_info2"] = request.POST.get("meeting_info2", "")
-        return redirect("map_pdf")
+        return redirect("checklist")
 
     context = {
         "meeting_info":  request.session.get("meeting_info",  ""),

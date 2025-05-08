@@ -26,6 +26,7 @@ from website.views import (
     map_view,
     resources_view,
     contact_view,
+    map_pdf_view,
 )
 
 urlpatterns = [
@@ -39,6 +40,7 @@ urlpatterns = [
 
     # Map views
     path('map/', map_view.as_view(), name='map'),
+    path('map-pdf', map_pdf_view, name='map_pdf'),
 
     # Django tutorial
     path("polls/", include("polls.urls")),

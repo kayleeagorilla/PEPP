@@ -15,6 +15,8 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 # Create your views here.
 def home_screen_view(request):
     print(request.headers)
+    for key in ("meeting_info", "meeting_info2"):
+            request.session.pop(key, None)
     return render(request, "base.html", {})
 
 def family_forms_view(request):
@@ -33,11 +35,16 @@ def family_forms_view(request):
     return render(request, 'family_forms.html')
 
 def location_forms_view(request):
-    if request.method == 'POST':
-        request.session['meeting_info'] = request.POST.get('meeting_info')
-        request.session['meeting_info2'] = request.POST.get('meeting_info2')
-        return redirect('checklist')
-    return render(request, 'location_forms.html')
+    if request.method == "POST":
+        request.session["meeting_info"]  = request.POST.get("meeting_info", "")
+        request.session["meeting_info2"] = request.POST.get("meeting_info2", "")
+        return redirect("map_pdf")
+
+    context = {
+        "meeting_info":  request.session.get("meeting_info",  ""),
+        "meeting_info2": request.session.get("meeting_info2", ""),
+    }
+    return render(request, "location_forms.html", context)
 
 def checklist_view(request):
     context = {
@@ -119,6 +126,11 @@ def resources_view(request):
 
 def contact_view(request):
     return render(request, 'contact.html', {})
+
+def map_pdf_view(request):
+  if request.method == 'POST':
+        return redirect('checklist')
+  return render(request, 'map_pdf.html')
 
 class map_view(View):
     def get(self, request):

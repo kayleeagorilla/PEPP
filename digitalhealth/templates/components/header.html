@@ -1,5 +1,8 @@
 {% url 'homepage'     as home_url %}
 {% url 'family_forms' as forms_url %}
+{% url 'location_forms' as locations_url %}
+{% url 'map_pdf' as map_pdf_url %}
+{% url 'checklist' as checklist_url %}
 {% url 'map'          as map_url %}
 {% url 'resources'    as resources_url %}
 {% url 'contact'      as contact_url %}
@@ -38,8 +41,9 @@
         </li>
         <li class="nav-item">
           <a href="{{ forms_url }}"
-             class="nav-link px-3 py-2 {% if request.path == forms_url %}active{% endif %}">
-            Family&nbsp;Form
+             class="nav-link px-3 py-2
+            {% if request.path == forms_url or request.path == locations_url or request.path == map_pdf_url or request.path == checklist_url %} active {% endif %}">
+            Planning
           </a>
         </li>
         <li class="nav-item">

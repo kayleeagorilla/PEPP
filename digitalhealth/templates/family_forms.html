@@ -82,6 +82,7 @@
       max-height: 500px;
       opacity: 1;
     }
+
   </style>
 
   {% include 'components/header.html' %}
@@ -107,14 +108,33 @@
                    class="form-control"
                    id="family_members"
                    name="family_members"
-                   min="1"
+                   min="0"
                    max="25"
                    required
                    style="max-width: 200px;"
                    value="1"
-                   oninput="if (this.value !== '' && this.value > 25) this.value = 25;"
-                   onblur="if (this.value === '' || this.value < 1) this.value = 1;
-                   toggleChildrenSection();"
+                   oninput="
+                     if (this.value === '') {
+                       toggleChildrenSection(false);
+                       return;
+                     }
+
+                     let v = parseInt(this.value, 10);
+                     if (v > 25) {
+                       v = 25;
+                     }
+
+                     if (v < 0) {
+                       v = 0;
+                     }
+
+                     this.value = v;
+                     toggleChildrenSection(v > 0);"
+                   onblur="
+                    if (this.value === '' || this.value < 1) {
+                      this.value = 1;
+                    }
+                    toggleChildrenSection(this.value > 0);"
             >
           </div>
         </div>
@@ -159,18 +179,33 @@
               </div>
             </div>
 
-            <div id="babyNumberSection" class="transition-section mb-3">
-              <label for="infant_number" class="form-label h5"> How many newborns/infants? </label>
+            <div id="babyNumberSection" class="transition-section">
+              <label for="infant_number" class="form-label h5 "> How many newborns/infants? </label>
               <div class="ms-3">
                 <input type="number"
                        class="form-control"
                        id="infant_number"
                        name="infant_number"
                        min="1"
-                       required style="max-width: 200px;"
+                       required
+                       style="max-width: 200px;"
                        value="1"
-                       oninput="if (this.value < 1) this.value = 1;
-                       if (parseInt(this.value) > parseInt(this.max)) { this.value = this.max; }">
+                       oninput="
+                        if (this.value === '') {
+                          return;
+                        }
+                        let v = parseInt(this.value, 10);
+                        if (v < 1) {
+                          v = 1;
+                        }
+                        if (this.max && v > parseInt(this.max, 10)) {
+                          v = this.max;
+                        }
+                        this.value = v;"
+                       onblur="
+                        if (this.value === '' || this.value < 1) {
+                          this.value = 1;
+                        }">
               </div>
             </div>
 
@@ -219,30 +254,6 @@
               infantNumber.value = 0;
             }
           }
-
-          // Makes 'choose number of babies' section appear/disappear depending on whether 'have baby' is checked as yes
-          // function toggleBabyNumberSection() {
-          //   const babyYes = document.getElementById('baby_yes');
-          //   const babyNumberSection = document.getElementById('babyNumberSection');
-          //   const infantNumber = document.getElementById('infant_number');
-          //   const familyCount = parseInt(document.getElementById('family_members').value, 10) || 1;
-          //
-          //   // Limits number of infants to 1 less than inputted family size
-          //   const maxInfants = Math.max(0, familyCount - 1);
-          //   infantNumber.max = maxInfants;
-          //
-          //   if (parseInt(infantNumber.value, 10) > maxInfants) {
-          //     infantNumber.value = maxInfants;
-          //   }
-          //
-          //   if (babyYes.checked) {
-          //     babyNumberSection.classList.add('open');
-          //     infantNumber.value = 1;
-          //   } else {
-          //     babyNumberSection.classList.remove('open');
-          //     infantNumber.value = 0;
-          //   }
-          // }
 
           function toggleBabyNumberSection() {
             const babyYes           = document.getElementById('baby_yes');

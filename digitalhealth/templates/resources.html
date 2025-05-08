@@ -97,6 +97,24 @@
       box-shadow: 0 0 0 0.25rem rgba(168, 230, 161, 0.4);
     }
 
+    a {
+      color: #006600;
+    }
+
+    a:visited {
+      color: #004d00;
+    }
+
+    a:hover {
+      color: #009900; text-decoration: underline;
+    }
+
+    a:active {
+      color: #003300;
+    }
+
+  </style>
+
   </style>
 
   {% include 'components/header.html' %}
@@ -142,6 +160,10 @@
           <div class="accordion-body">
             <ul>
               <li> <a href="https://www.ready.gov/tsunamis" target="_blank"> Ready: Tsunamis </a> </li>
+              <li> <a href="https://www.tsunami.gov/" target="_blank"> U.S. Tsunami Warning System </a> </li>
+              <li> <a href="https://www.weather.gov/safety/tsunami-twc" target="_blank"> National Weather Service: Tsunami Warning Centers </a> </li>
+              <li> <a href="https://www.weather.gov/safety/tsunami-outreach" target="_blank"> National Weather Service: Tsunami Education and Outreach Materials </a> </li>
+              <li> <a href="https://www.noaa.gov/education/resource-collections/ocean-coasts/tsunamis" target="_blank"> National Oceanic and Atmospheric Administration: Tsunamis </a> </li>
             </ul>
           </div>
         </div>
@@ -210,6 +232,8 @@
           <div class="accordion-body">
             <ul>
               <li> <a href="https://www.ready.gov/pandemic" target="_blank"> Ready: Pandemics </a> </li>
+              <li> <a href="https://www.cdc.gov/outbreaks/index.html" target="_blank"> Centers for Disease Control and Prevention: Outbreaks </a> </li>
+
             </ul>
           </div>
         </div>
@@ -226,6 +250,9 @@
             <ul>
               <li> <a href="https://www.ready.gov/floods" target="_blank"> Ready: Floods </a> </li>
               <li> <a href="https://medlineplus.gov/floods.html" target="_blank"> MedlinePlus: Floods </a> </li>
+              <li> <a href="https://www.fema.gov/flood-maps" target="_blank"> Federal Emergency Management Agency: Flood Maps </a> </li>
+              <li> <a href="https://www.weather.gov/ffc/floods" target="_blank"> National Weather Service: Floods and Flash Floods </a> </li>
+              <li> <a href="https://www.cdc.gov/floods/about/index.html" target="_blank"> Centers for Disease Control and Prevention: Floods </a> </li>
             </ul>
           </div>
         </div>
@@ -241,6 +268,8 @@
           <div class="accordion-body">
             <ul>
               <li> <a href="https://www.ready.gov/volcanoes" target="_blank"> Ready: Volcanoes </a> </li>
+              <li> <a href="https://www.usgs.gov/vhp" target="_blank"> U.S. Geological Survey: Volcano Hazards Program </a> </li>
+              <li> <a href="https://www.epa.gov/natural-disasters/volcanoes" target="_blank"> U.S. Environmental Protection Agency: Volcanoes </a> </li>
             </ul>
           </div>
         </div>
@@ -253,6 +282,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"> </script>
 </body>
 
-{% include 'components/footer.html' %}
+<footer>
+  {% include 'components/footer.html' %}
+</footer>
 
 </html>

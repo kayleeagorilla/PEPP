@@ -16,7 +16,7 @@
     @page {
       margin: 0;
       size: landscape;
-      background-image: url("{% static 'images/landscape‑bg.jpg' %}");
+      background-image: url("{% static 'images/landscape-bg.png' %}");
       background-position: center center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -112,15 +112,19 @@
     }
 
     .kit-icons{
-      position:absolute;
-      bottom:-5cm;
-      left:0.6cm;
-      display:flex;
-      gap:0.8cm;
+      position: absolute;
+      bottom: -4.2cm;
+      left: 4.4cm;
+      display: flex;
+      gap: 0.1cm;
     }
 
     .kit-icons img {
-      width: 5cm;
+      width: 4cm;
+    }
+
+    li {
+      line-height: 1.4;
     }
 
   </style>
@@ -222,8 +226,11 @@
   <article id="columns2" class="second-page">
 
     <div class="kit-icons">
+      <img src="{% static 'images/cannedfood.png' %}" alt="Canned-food">
       <img src="{% static 'images/water.png' %}"     alt="Water jug">
       <img src="{% static 'images/multitool.png' %}" alt="Multi-tool">
+      <img src="{% static 'images/documents.png' %}" alt="Documents">
+      <img src="{% static 'images/charger.png' %}" alt="Charger">
     </div>
 
     <section>
